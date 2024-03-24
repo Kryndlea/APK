@@ -1,0 +1,1 @@
+C:\Users\annak\anaconda3\Scripts\pyuic6.exe -o MainForm.py -x form.ui
