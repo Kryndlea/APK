@@ -1,3 +1,3 @@
 # Algoritmy počítačové kartografie - úkoly
 
-### Anna Brázdová a Petra Pajmová
+### Anna Brázdová, Petra Pajmová & Jakub Zapletal
