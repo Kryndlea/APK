@@ -170,13 +170,6 @@ class Ui_MainWindow(object):
             maer = a.createMBR(building)
             if maer is not None:
                 maer_list.append(maer)
-            else:
-                warning_box = QMessageBox()
-                warning_box.setText("Acknowledgement")
-                warning_box.setIcon(QMessageBox.Icon.Warning)
-                warning_box.setInformativeText(
-                    f"Found empty geometry in buildings dataset, skipping...")
-                warning_box.exec()
         n = len(maer_list)
         if self.Canvas.visible:
             signals = []
