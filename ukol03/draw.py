@@ -86,8 +86,8 @@ class Draw(QWidget):
             qp.setPen(Qt.GlobalColor.gray)  # Keep the gray outline for contrast
 
             # Define the colors for the beginning and end of the ramp
-            start_color = QColor(247, 252, 245)  # Lightest green (almost white)
-            end_color = QColor(0, 104, 55)       # Darkest green
+            start_color = QColor(255, 255, 255)  
+            end_color = QColor(110, 110, 110)        
 
             # Draw slope
             for t in self.dtm_slope:
@@ -109,11 +109,11 @@ class Draw(QWidget):
                 "N": QColor(0, 0, 255),   # North (Blue)
                 "NE": QColor(0, 128, 255),  # Northeast (Light Blue)
                 "E": QColor(0, 255, 0),    # East (Green)
-                "SE": QColor(128, 255, 0),  # Southeast (Light Green)
+                "SE": QColor(173, 255, 47),  # Southeast (Light Green)
                 "S": QColor(255, 0, 0),    # South (Red)
-                "SW": QColor(255, 128, 0),  # Southwest (Orange)
+                "SW": QColor(255, 174, 66),  # Southwest (Orange)
                 "W": QColor(255, 255, 0),  # West (Yellow)
-                "NW": QColor(128, 128, 128) # Northwest (Gray)
+                "NW": QColor(190, 70, 220) # Northwest (Purple)
             }
             
             for t in self.dtm_exposition: 
