@@ -27,11 +27,30 @@ class Draw(QWidget):
         self.viewExposition = True
 
     def _get_exposition_angle(self, exposition_class):
+        """
+        helper function to get the angle in radians for the exposition class
+        param exposition_class: The exposition class (e.g., "N", "NE", etc.)
+        return: The angle in radians for the exposition class
+        """
         angles = {
             "N": 0, "NE": pi/4, "E": pi/2, "SE": 3*pi/4, 
             "S": pi, "SW": 5*pi/4, "W": 3*pi/2, "NW": 7*pi/4
         }
         return angles[exposition_class]
+
+    def _interpolate_color(self, val, color1, color2):
+        """
+        Helper function to interpolate between two colors.
+        param val: The value in the range 0-1 to interpolate the color for.
+        param color1: The color to interpolate from.
+        param color2: The color to interpolate to.
+        return: The interpolated color between color1 and color2 based on the value val.
+        """
+        return QColor(
+            int(color1.red() + val * (color2.red() - color1.red())),
+            int(color1.green() + val * (color2.green() - color1.green())),
+            int(color1.blue() + val * (color2.blue() - color1.blue()))
+        )
     
     def mousePressEvent(self, e:QMouseEvent):
         #Get cursor position
@@ -63,21 +82,26 @@ class Draw(QWidget):
         qp.begin(self)
         
         if self.viewSlope:
-            #Set graphic attributes
-            qp.setPen(Qt.GlobalColor.gray)
-      
-            #Draw slope
+            # Set graphic attributes
+            qp.setPen(Qt.GlobalColor.gray)  # Keep the gray outline for contrast
+
+            # Define the colors for the beginning and end of the ramp
+            start_color = QColor(247, 252, 245)  # Lightest green (almost white)
+            end_color = QColor(0, 104, 55)       # Darkest green
+
+            # Draw slope
             for t in self.dtm_slope:
-                #Get slope
+                # Get slope
                 slope = t.getSlope()
-            
-                #Convert slope to color
-                mju = 2*255/pi
-                col = int(255 - mju*slope)
-                color = QColor(col, col, col)
-                qp.setBrush(color)
-            
-                #Draw triangle
+
+                # Normalize slope to the range 0-1
+                max_slope = max(t.getSlope() for t in self.dtm_slope) 
+                normalized_slope = slope / max_slope if max_slope > 0 else 0
+
+                # Interpolate the color based on the normalized slope
+                qp.setBrush(self._interpolate_color(normalized_slope, start_color, end_color))
+
+                # Draw triangle
                 qp.drawPolygon(t.getVertices())
 
         if self.viewExposition:
